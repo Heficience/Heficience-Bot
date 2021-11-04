@@ -16,13 +16,13 @@ const prefix = "!";
 /* ----------------------- Fonction Desmos---------------------------- */
 
 function EnvoiMessageAdmin(messageToAdmin){
-    const list = client.guilds.cache.get("472687107530555402");
+    const list = client.guilds.cache.get("904780608922849290");
     list.members.cache.forEach(member => {
-        if (member.id !== "777238000316055553") {
-            if (member.roles.cache.some(role => role.name === 'Administrateurs')) {
+        if (member.id !== "905899233876508703") {
+            if (member.roles.cache.some(role => role.name === 'Admins')) {
                 //if (member.user.cache.bot) return;
                 member.send(messageToAdmin);
-            } else if (member.roles.cache.some(role => role.name === 'Moderateur')) {
+            } else if (member.roles.cache.some(role => role.name === 'Staff')) {
                 //if (member.user.cache.bot) return;
                 member.send(messageToAdmin);
             }
@@ -236,7 +236,7 @@ client.on('message', message => {
         }
     }
 
-    const list = client.guilds.cache.get("789953828275224587");
+    const list = client.guilds.cache.get("904780608922849290");
 
     if ((message.content.includes('https://') || message.content.includes('http://') || message.content.includes('www.') || message.content.includes('.fr') || message.content.includes('.be') || message.content.includes('.com') || message.content.includes('.uk') || message.content.includes('.de') || message.content.includes('.org'))) {
         answer = message.author.username + ' a envoyé ce message ***'  + message.content + '*** sur le salon ' + message.channel.name;
@@ -244,7 +244,7 @@ client.on('message', message => {
     }
     let mention = message.mentions.roles.first();
     if (mention) {
-        if (mention.id == "513252820967882764") {
+        if (mention.id == "904780827123134524") {
             answer = message.author.username + ' a envoyé ce message ***'  + message.content + '*** sur le salon ' + message.channel.name;
             EnvoiMessageAdmin(answer);
         }
