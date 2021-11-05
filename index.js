@@ -1,4 +1,4 @@
-import Discord from 'discord.js';
+import Discord from 'discord.js-12';
 const client = new Discord.Client();
 import fs from 'fs';
 import fetch from 'node-fetch';
