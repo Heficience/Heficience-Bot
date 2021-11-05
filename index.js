@@ -1,14 +1,17 @@
-const Discord = require('discord.js');
+import Discord from 'discord.js';
 const client = new Discord.Client();
-const fs = require('fs');
-const fetch = require('node-fetch');
-const path = require('path');
-const crypto = require('crypto');
-list_username = [];
-list_id = [];
-list_jour_message = [];
-list_heure_message = [];
-chemin_fichier = "./newUser.json";
+import fs from 'fs';
+import fetch from 'node-fetch';
+import path from 'path';
+import dotenv from 'dotenv';
+import crypto from 'crypto';
+dotenv.config();
+var list_username = [];
+var list_id = [];
+var list_jour_message = [];
+var list_heure_message = [];
+var chemin_fichier = "./newUser.json";
+var answer = "";
 const prefix_wave_react_list = ["hello", "bonjour", "bonsoir", "coucou", "hey", "salut"];
 const num_react_list = ['0️⃣','1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🔟'];
 const prefix = "!";
@@ -192,8 +195,8 @@ client.once('ready', member => {
     console.log('Ready!');
     setInterval(function(){
         let verif_time = new Date();
-        verif_jour = verif_time.getDate();
-        verif_heure = verif_time.getHours();
+        let verif_jour = verif_time.getDate();
+        let verif_heure = verif_time.getHours();
         LireFichierJson(chemin_fichier);
         console.log('1-heure actuel : ', verif_heure);
         for (let index = 0; index < list_username.length; index++) {
@@ -218,8 +221,8 @@ client.on('guildMemberAdd', member => {
     let time = new Date();
     let jour_arriver = new Date();
     jour_arriver.setDate(time.getDate()+1);
-    jour_message = jour_arriver.getDate();
-    heure_user = time.getHours();
+    let jour_message = jour_arriver.getDate();
+    let heure_user = time.getHours();
     list_username.push(member.user.username);
     list_id.push(member.user.id);
     list_jour_message.push(jour_message);
