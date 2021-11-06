@@ -189,6 +189,43 @@ function getUserFromMention(mention) {
     }
 }
 
+/*--------------------------------------Fonction Tâches-------------------------------------------*/
+
+function task(message) {
+    var content=message.content;
+    var channel=message.channel;
+    message.delete();
+    message.channel.send(content);
+}
+
+function reacttask(message) {
+  message.react('👌');
+  message.react('👍');
+  message.react('👎');
+}
+
+function attributetask(reaction_orig, message, user) {
+
+  if (reaction_orig.emoji.name == '👌') {
+      var content=message.content + '\n <@' + user + '> Mission acceptée.';
+      var channel=message.channel;
+      message.delete();
+      message.channel.send(content);
+  }
+  else if (reaction_orig.emoji.name == '👍') {
+      var content=message.content + '\n <@' + user + '> Mission terminée.';
+      var channel=message.channel;
+      message.delete();
+      message.channel.send(content);
+  }
+  else if (reaction_orig.emoji.name == '👎') {
+      var content=message.content + '\n <@' + user + '> Mission abandonnée.';
+      var channel=message.channel;
+      message.delete();
+      message.channel.send(content);
+  }
+}
+
 /* ----------------------------------- Fonction Discord ------------------------------------------ */
 
 client.once('ready', member => {
@@ -231,6 +268,12 @@ client.on('guildMemberAdd', member => {
 });
 
 client.on('message', message => {
+    let command = message.content.slice(prefix.length, message.length).toLowerCase();
+    /* -----------------------------------   Tasks    ---------------------------------- */
+    if (message.author.bot && command.startsWith("tache") && message.channel.name == '💼-taches') {
+        reacttask(message);
+    }
+    /* ----------------------------- réponses et admins --------------------------------- */
     if (message.author.bot) return; // don't accept message from bots
     for (let i = 0; i < prefix_wave_react_list.length; i++) {
         if (message.content.toLowerCase().startsWith(prefix_wave_react_list[i])) {
@@ -252,10 +295,8 @@ client.on('message', message => {
             EnvoiMessageAdmin(answer);
         }
     }
-
     if (!message.content.startsWith(prefix)) return; // don't accept message which does not start with the prefix
     /* ----------------------------------- Commandes ---------------------------------- */
-    let command = message.content.slice(prefix.length, message.length).toLowerCase();
     if (command.startsWith("yes/no")) {
         const reactionEmojiOUI = message.guild.emojis.cache.find(emoji => emoji.name === 'OUI4');
         const reactionEmojiNON = message.guild.emojis.cache.find(emoji => emoji.name === 'NON4');
@@ -280,7 +321,23 @@ client.on('message', message => {
         var crypto = require("crypto");
         var r = crypto.randomBytes(20).toString('hex');
         message.reply("https://meet.jit.si/" + r);
+    } else if (command.startsWith("tache") && message.channel.name == '💼-taches') {
+        task(message);
     };
+});
+
+client.on('messageReactionAdd', (reaction_orig, user) => {
+  // fetch the message if it's not cached
+  const message = !reaction_orig.message.author
+      ? reaction_orig.message.fetch()
+      : reaction_orig.message;
+  if (reaction_orig.message.author.id === user.id) {
+     // the reaction is coming from the same user who posted the message
+     return;
+  }
+  if (message.channel.name == '💼-taches') {
+      attributetask(reaction_orig, reaction_orig.message, user);
+  }
 });
 
 client.on('guildMemberRemove', member => {
