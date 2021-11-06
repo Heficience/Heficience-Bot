@@ -286,7 +286,7 @@ client.on('message', message => {
 
     if ((message.content.includes('https://') || message.content.includes('http://') || message.content.includes('www.') || message.content.includes('.fr') || message.content.includes('.be') || message.content.includes('.com') || message.content.includes('.uk') || message.content.includes('.de') || message.content.includes('.org'))) {
         answer = message.author.username + ' a envoyé ce message ***'  + message.content + '*** sur le salon ' + message.channel.name;
-        EnvoiMessageAdmin(answer);
+        //EnvoiMessageAdmin(answer);
     }
     let mention = message.mentions.roles.first();
     if (mention) {
