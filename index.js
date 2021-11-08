@@ -1,17 +1,18 @@
 import Discord from 'discord.js-12';
 const client = new Discord.Client();
+const exampleEmbed = new Discord.MessageEmbed();
 import fs from 'fs';
 import fetch from 'node-fetch';
 import path from 'path';
 import dotenv from 'dotenv';
 import crypto from 'crypto';
 dotenv.config();
-var list_username = [];
-var list_id = [];
-var list_jour_message = [];
-var list_heure_message = [];
-var chemin_fichier = "./newUser.json";
-var answer = "";
+let list_username = [];
+let list_id = [];
+let list_jour_message = [];
+let list_heure_message = [];
+let chemin_fichier = "./newUser.json";
+let answer = "";
 const prefix_wave_react_list = ["hello", "bonjour", "bonsoir", "coucou", "hey", "salut"];
 const num_react_list = ['0️⃣','1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🔟'];
 const prefix = "!";
@@ -35,7 +36,7 @@ function EnvoiMessageAdmin(messageToAdmin){
 
 function LireFichierJson(path){
     fs.readFile(path,{encoding: 'utf8'},function(err,data) {
-        var users = JSON.parse(data);
+        let users = JSON.parse(data);
         list_username = users.pseudo;
         list_id = users.id;
         list_jour_message = users.jour;
@@ -59,13 +60,13 @@ function EcrireFichierJson(path, pseudo, id, heure, jour){
 /* ----------------------------------- Fonction Downloads ------------------------------------------ */
 
 function dateAujourdui() {
-    var Aujourdui = new Date();
+    let Aujourdui = new Date();
     Aujourdui.setDate(Aujourdui.getDate() + 1);
     Aujourdui = Aujourdui.toISODate();
     return Aujourdui;
 }
 function dateSeptJour() {
-    var septJours = new Date();
+    let septJours = new Date();
     septJours.setDate(septJours.getDate() - 7);
     septJours = septJours.toISODate();
     return septJours;
@@ -82,12 +83,12 @@ if (!Date.prototype.toISODate) {
     };
 }
 function requestHOSDL(message) {
-    var nbWeek;
-    var NbWeekURL = `https://www.handy-open-source.org/assets/nodejs/gettotal/?startdate=${dateSeptJour()}&enddate=${dateAujourdui()}`;
-    var nbWeekDV;
-    var NbWeekDVURL = `https://sourceforge.net/projects/dvkbuntu/files/stats/json?start_date=${dateSeptJour()}&end_date=${dateAujourdui()}`;
-    var nbWeekDVL;
-    var NbWeekDVLURL = `https://sourceforge.net/projects/dvkbuntulight/files/stats/json?start_date=${dateSeptJour()}&end_date=${dateAujourdui()}`;
+    let nbWeek;
+    let NbWeekURL = `https://www.handy-open-source.org/assets/nodejs/gettotal/?startdate=${dateSeptJour()}&enddate=${dateAujourdui()}`;
+    let nbWeekDV;
+    let NbWeekDVURL = `https://sourceforge.net/projects/dvkbuntu/files/stats/json?start_date=${dateSeptJour()}&end_date=${dateAujourdui()}`;
+    let nbWeekDVL;
+    let NbWeekDVLURL = `https://sourceforge.net/projects/dvkbuntulight/files/stats/json?start_date=${dateSeptJour()}&end_date=${dateAujourdui()}`;
     fetch(NbWeekURL)
     .then(function(response) {
         return response.json();
@@ -106,7 +107,7 @@ function requestHOSDL(message) {
                 nbWeek = `${data1.result[0].total}`;
                 nbWeekDV = `${data2.summaries.time.downloads}`;
                 nbWeekDVL = `${data3.summaries.time.downloads}`;
-                var weektot =
+                let weektot =
                 parseInt(nbWeek, 10) +
                 parseInt(nbWeekDV, 10) +
                 parseInt(nbWeekDVL, 10);
@@ -127,12 +128,12 @@ function requestHOSDL(message) {
         throw err;
     });
 
-    var nbTotal;
-    var nbTotalURL = `https://www.handy-open-source.org/assets/nodejs/gettotal/?startdate=2010-01-01&enddate=${dateAujourdui()}`;
-    var nbTotalDV;
-    var nbTotalDVURL = `https://sourceforge.net/projects/dvkbuntu/files/stats/json?start_date=2010-01-01&end_date=${dateAujourdui()}`;
-    var nbTotalDVL;
-    var nbTotalDVLURL = `https://sourceforge.net/projects/dvkbuntulight/files/stats/json?start_date=2010-01-01&end_date=${dateAujourdui()}`;
+    let nbTotal;
+    let nbTotalURL = `https://www.handy-open-source.org/assets/nodejs/gettotal/?startdate=2010-01-01&enddate=${dateAujourdui()}`;
+    let nbTotalDV;
+    let nbTotalDVURL = `https://sourceforge.net/projects/dvkbuntu/files/stats/json?start_date=2010-01-01&end_date=${dateAujourdui()}`;
+    let nbTotalDVL;
+    let nbTotalDVLURL = `https://sourceforge.net/projects/dvkbuntulight/files/stats/json?start_date=2010-01-01&end_date=${dateAujourdui()}`;
     fetch(nbTotalURL)
     .then(function(response) {
         return response.json();
@@ -151,7 +152,7 @@ function requestHOSDL(message) {
                 nbTotal = `${data1.result[0].total}`;
                 nbTotalDV = `${data2.total}`;
                 nbTotalDVL = `${data3.total}`;
-                var Totaltot =
+                let Totaltot =
                 parseInt(nbTotal, 10) +
                 parseInt(nbTotalDV, 10) +
                 parseInt(nbTotalDVL, 10);
@@ -192,10 +193,26 @@ function getUserFromMention(mention) {
 /*--------------------------------------Fonction Tâches-------------------------------------------*/
 
 function task(message) {
-    var content=message.content;
-    var channel=message.channel;
+    let content = message.content.startsWith('!tache')
+      ? message.content.substr(6)
+      : message.content;
+    let channel=message.channel;
+    let author=message.author.username;
+    let profilepicture=message.author.avatarURL();
     message.delete();
-    message.channel.send(content);
+    exampleEmbed
+	     .setColor('#0099ff')
+	     .setTitle('Tâche à effectuer')
+	     .setURL('http://heficience.com/')
+	     .setAuthor('Tâche donnée par ' + author, 'https://i.imgur.com/SlRpNoc.png', 'http://heficience.com/')
+	     .setDescription(content)
+	     .setThumbnail(profilepicture)
+	     .setImage('https://i.imgur.com/SlRpNoc.png')
+	     .setTimestamp()
+	     .setFooter('👌 Tâche acceptée 👍 Tâche terminée 👎 Tâche abandonnée \nà traiter', 'https://i.imgur.com/SlRpNoc.png');
+
+    channel.send(exampleEmbed);
+    //message.channel.send(content);
 }
 
 function reacttask(message) {
@@ -205,24 +222,57 @@ function reacttask(message) {
 }
 
 function attributetask(reaction_orig, message, user) {
-
+  message.reactions.removeAll();
   if (reaction_orig.emoji.name == '👌') {
-      var content=message.content + '\n <@' + user + '> Mission acceptée.';
-      var channel=message.channel;
-      message.delete();
-      message.channel.send(content);
+      let content='@' + user.username;
+      let channel=message.channel;
+      exampleEmbed
+  	     .setColor('#8659DC')
+  	     .setTitle('Tâche acceptée')
+  	     .setURL('http://heficience.com/')
+  	     .setAuthor('Tâche acceptée par ' + user.username, 'https://i.imgur.com/SlRpNoc.png', 'http://heficience.com/')
+         .addField(content, ' Mission acceptée.', true)
+  	     .setThumbnail(user.avatarURL())
+  	     .setImage('https://i.imgur.com/SlRpNoc.png')
+  	     .setTimestamp()
+  	     .setFooter('👌 Tâche acceptée 👍 Tâche terminée 👎 Tâche abandonnée \nacceptée', 'https://i.imgur.com/SlRpNoc.png');
+
+      message.edit(exampleEmbed);
+      reacttask(message);
   }
   else if (reaction_orig.emoji.name == '👍') {
-      var content=message.content + '\n <@' + user + '> Mission terminée.';
-      var channel=message.channel;
-      message.delete();
-      message.channel.send(content);
+      let content='@' + user.username;
+      let channel=message.channel;
+      exampleEmbed
+  	     .setColor('#1D9213')
+  	     .setTitle('Tâche terminée')
+  	     .setURL('http://heficience.com/')
+  	     .setAuthor('Tâche terminée par ' + user.username, 'https://i.imgur.com/SlRpNoc.png', 'http://heficience.com/')
+  	     .addField(content, ' Mission terminée.', true)
+  	     .setThumbnail(user.avatarURL())
+  	     .setImage('https://i.imgur.com/SlRpNoc.png')
+  	     .setTimestamp()
+  	     .setFooter('👌 Tâche acceptée 👍 Tâche terminée 👎 Tâche abandonnée \nfinit', 'https://i.imgur.com/SlRpNoc.png');
+
+      message.edit(exampleEmbed);
+      reacttask(message);
   }
   else if (reaction_orig.emoji.name == '👎') {
-      var content=message.content + '\n <@' + user + '> Mission abandonnée.';
-      var channel=message.channel;
-      message.delete();
-      message.channel.send(content);
+      let content='@' + user.username;
+      let channel=message.channel;
+      exampleEmbed
+         .setColor('#FF0202')
+         .setTitle('Tâche laissée vacante')
+         .setURL('http://heficience.com/')
+         .setAuthor('Tâche abandonée par ' + user.username, 'https://i.imgur.com/SlRpNoc.png', 'http://heficience.com/')
+         .addField(content, ' Mission abandonnée.', true)
+         .setThumbnail(user.avatarURL())
+         .setImage('https://i.imgur.com/SlRpNoc.png')
+         .setTimestamp()
+         .setFooter('👌 Tâche acceptée 👍 Tâche terminée 👎 Tâche abandonnée \nabandonnée', 'https://i.imgur.com/SlRpNoc.png');
+
+      message.edit(exampleEmbed);
+      reacttask(message);
   }
 }
 
@@ -269,8 +319,9 @@ client.on('guildMemberAdd', member => {
 
 client.on('message', message => {
     let command = message.content.slice(prefix.length, message.length).toLowerCase();
+
     /* -----------------------------------   Tasks    ---------------------------------- */
-    if (message.author.bot && command.startsWith("tache") && message.channel.name == '💼-taches') {
+    if (message.author.bot && message.embeds && message.channel.name == '💼-taches') {
         reacttask(message);
     }
     /* ----------------------------- réponses et admins --------------------------------- */
@@ -318,8 +369,8 @@ client.on('message', message => {
         message.channel.send(answer);
         requestHOSDL(message);
     } else if (command.startsWith("jitsi")) {
-        var crypto = require("crypto");
-        var r = crypto.randomBytes(20).toString('hex');
+        let crypto = require("crypto");
+        let r = crypto.randomBytes(20).toString('hex');
         message.reply("https://meet.jit.si/" + r);
     } else if (command.startsWith("tache") && message.channel.name == '💼-taches') {
         task(message);
