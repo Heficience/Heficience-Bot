@@ -225,7 +225,7 @@ function attributetask(reaction_orig, message, user) {
   if (reaction_orig.emoji.name == '👌') {
       let content='@' + user.username;
       let channel=message.channel;
-      let desc=message.embeds[0].description;
+      let desc=message.embeds[0].description + '\n' + content + ' acceptée';
       exampleEmbed
   	     .setColor('#8659DC')
   	     .setTitle('Tâche acceptée')
@@ -243,7 +243,7 @@ function attributetask(reaction_orig, message, user) {
   else if (reaction_orig.emoji.name == '👍') {
       let content='@' + user.username;
       let channel=message.channel;
-      let desc=message.embeds[0].description;
+      let desc=message.embeds[0].description + '\n' + content + ' finit';
       exampleEmbed
   	     .setColor('#1D9213')
   	     .setTitle('Tâche terminée')
@@ -261,7 +261,7 @@ function attributetask(reaction_orig, message, user) {
   else if (reaction_orig.emoji.name == '👎') {
       let content='@' + user.username;
       let channel=message.channel;
-      let desc=message.embeds[0].description;
+      let desc=message.embeds[0].description + '\n' + content + ' abandonnée';
       exampleEmbed
          .setColor('#FF0202')
          .setTitle('Tâche laissée vacante')
