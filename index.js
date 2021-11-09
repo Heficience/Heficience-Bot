@@ -225,7 +225,7 @@ function attributetask(reaction_orig, message, user) {
   if (reaction_orig.emoji.name == '👌') {
       let content='@' + user.username;
       let channel=message.channel;
-      let desc=message.embeds[0].description + '\n' + content + ' acceptée';
+      let desc=message.embeds[0].description + '\n<@' + user.id + '> acceptée';
       exampleEmbed
   	     .setColor('#8659DC')
   	     .setTitle('Tâche acceptée')
@@ -243,7 +243,7 @@ function attributetask(reaction_orig, message, user) {
   else if (reaction_orig.emoji.name == '👍') {
       let content='@' + user.username;
       let channel=message.channel;
-      let desc=message.embeds[0].description + '\n' + content + ' finit';
+      let desc=message.embeds[0].description + '\n<@' + user.id + '> finit';
       exampleEmbed
   	     .setColor('#1D9213')
   	     .setTitle('Tâche terminée')
@@ -256,12 +256,12 @@ function attributetask(reaction_orig, message, user) {
   	     .setFooter('👌 Tâche acceptée 👍 Tâche terminée 👎 Tâche abandonnée \n' + content + ' finit', 'https://i.imgur.com/SlRpNoc.png');
 
       message.edit(exampleEmbed);
-      reacttask(message);
+      //reacttask(message);
   }
   else if (reaction_orig.emoji.name == '👎') {
       let content='@' + user.username;
       let channel=message.channel;
-      let desc=message.embeds[0].description + '\n' + content + ' abandonnée';
+      let desc=message.embeds[0].description + '\n<@' + user.id + '> abandonnée';
       exampleEmbed
          .setColor('#FF0202')
          .setTitle('Tâche laissée vacante')
