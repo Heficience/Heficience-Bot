@@ -1,6 +1,6 @@
 import Discord from 'discord.js-12';
 const client = new Discord.Client();
-const exampleEmbed = new Discord.MessageEmbed();
+//let exampleEmbed = new Discord.MessageEmbed();
 import fs from 'fs';
 import fetch from 'node-fetch';
 import path from 'path';
@@ -200,7 +200,7 @@ function task(message) {
     let author=message.author.username;
     let profilepicture=message.author.avatarURL();
     message.delete();
-    exampleEmbed
+    let exampleEmbed = new Discord.MessageEmbed()
 	     .setColor('#0099ff')
 	     .setTitle('Tâche à effectuer')
 	     .setURL('http://heficience.com/')
@@ -226,24 +226,26 @@ function attributetask(reaction_orig, message, user) {
   if (reaction_orig.emoji.name == '👌') {
       let content='@' + user.username;
       let channel=message.channel;
-      exampleEmbed
+      let exampleEmbed0 = new Discord.MessageEmbed();
+      exampleEmbed0
   	     .setColor('#8659DC')
   	     .setTitle('Tâche acceptée')
   	     .setURL('http://heficience.com/')
   	     .setAuthor('Tâche acceptée par ' + user.username, 'https://i.imgur.com/SlRpNoc.png', 'http://heficience.com/')
-         .addField(content, ' Mission acceptée.', true)
+             .addField(content, ' Mission acceptée.', true)
   	     .setThumbnail(user.avatarURL())
   	     .setImage('https://i.imgur.com/SlRpNoc.png')
   	     .setTimestamp()
   	     .setFooter('👌 Tâche acceptée 👍 Tâche terminée 👎 Tâche abandonnée \nacceptée', 'https://i.imgur.com/SlRpNoc.png');
 
-      message.edit(exampleEmbed);
+      message.edit(exampleEmbed0);
       reacttask(message);
   }
   else if (reaction_orig.emoji.name == '👍') {
       let content='@' + user.username;
       let channel=message.channel;
-      exampleEmbed
+      let exampleEmbed1 = new Discord.MessageEmbed();
+      exampleEmbed1
   	     .setColor('#1D9213')
   	     .setTitle('Tâche terminée')
   	     .setURL('http://heficience.com/')
@@ -254,13 +256,14 @@ function attributetask(reaction_orig, message, user) {
   	     .setTimestamp()
   	     .setFooter('👌 Tâche acceptée 👍 Tâche terminée 👎 Tâche abandonnée \nfinit', 'https://i.imgur.com/SlRpNoc.png');
 
-      message.edit(exampleEmbed);
+      message.edit(exampleEmbed1);
       reacttask(message);
   }
   else if (reaction_orig.emoji.name == '👎') {
       let content='@' + user.username;
       let channel=message.channel;
-      exampleEmbed
+      let exampleEmbed2 = new Discord.MessageEmbed();
+      exampleEmbed2
          .setColor('#FF0202')
          .setTitle('Tâche laissée vacante')
          .setURL('http://heficience.com/')
@@ -271,7 +274,7 @@ function attributetask(reaction_orig, message, user) {
          .setTimestamp()
          .setFooter('👌 Tâche acceptée 👍 Tâche terminée 👎 Tâche abandonnée \nabandonnée', 'https://i.imgur.com/SlRpNoc.png');
 
-      message.edit(exampleEmbed);
+      message.edit(exampleEmbed2);
       reacttask(message);
   }
 }
