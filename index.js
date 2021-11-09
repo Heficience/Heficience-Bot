@@ -1,6 +1,6 @@
 import Discord from 'discord.js-12';
 const client = new Discord.Client();
-//let exampleEmbed = new Discord.MessageEmbed();
+let exampleEmbed = new Discord.MessageEmbed();
 import fs from 'fs';
 import fetch from 'node-fetch';
 import path from 'path';
@@ -200,7 +200,7 @@ function task(message) {
     let author=message.author.username;
     let profilepicture=message.author.avatarURL();
     message.delete();
-    let exampleEmbed = new Discord.MessageEmbed()
+    exampleEmbed
 	     .setColor('#0099ff')
 	     .setTitle('Tâche à effectuer')
 	     .setURL('http://heficience.com/')
@@ -212,7 +212,6 @@ function task(message) {
 	     .setFooter('👌 Tâche acceptée 👍 Tâche terminée 👎 Tâche abandonnée \nà traiter', 'https://i.imgur.com/SlRpNoc.png');
 
     channel.send(exampleEmbed);
-    //message.channel.send(content);
 }
 
 function reacttask(message) {
@@ -226,55 +225,55 @@ function attributetask(reaction_orig, message, user) {
   if (reaction_orig.emoji.name == '👌') {
       let content='@' + user.username;
       let channel=message.channel;
-      let exampleEmbed0 = new Discord.MessageEmbed();
-      exampleEmbed0
+      let desc=message.embeds[0].description;
+      exampleEmbed
   	     .setColor('#8659DC')
   	     .setTitle('Tâche acceptée')
   	     .setURL('http://heficience.com/')
   	     .setAuthor('Tâche acceptée par ' + user.username, 'https://i.imgur.com/SlRpNoc.png', 'http://heficience.com/')
-             .addField(content, ' Mission acceptée.', true)
-  	     .setThumbnail(user.avatarURL())
+  	     .setDescription(desc)
+             .setThumbnail(user.avatarURL())
   	     .setImage('https://i.imgur.com/SlRpNoc.png')
   	     .setTimestamp()
-  	     .setFooter('👌 Tâche acceptée 👍 Tâche terminée 👎 Tâche abandonnée \nacceptée', 'https://i.imgur.com/SlRpNoc.png');
+  	     .setFooter('👌 Tâche acceptée 👍 Tâche terminée 👎 Tâche abandonnée \n' + content + ' acceptée', 'https://i.imgur.com/SlRpNoc.png');
 
-      message.edit(exampleEmbed0);
+      message.edit(exampleEmbed);
       reacttask(message);
   }
   else if (reaction_orig.emoji.name == '👍') {
       let content='@' + user.username;
       let channel=message.channel;
-      let exampleEmbed1 = new Discord.MessageEmbed();
-      exampleEmbed1
+      let desc=message.embeds[0].description;
+      exampleEmbed
   	     .setColor('#1D9213')
   	     .setTitle('Tâche terminée')
   	     .setURL('http://heficience.com/')
   	     .setAuthor('Tâche terminée par ' + user.username, 'https://i.imgur.com/SlRpNoc.png', 'http://heficience.com/')
-  	     .addField(content, ' Mission terminée.', true)
-  	     .setThumbnail(user.avatarURL())
+  	     .setDescription(desc)
+             .setThumbnail(user.avatarURL())
   	     .setImage('https://i.imgur.com/SlRpNoc.png')
   	     .setTimestamp()
-  	     .setFooter('👌 Tâche acceptée 👍 Tâche terminée 👎 Tâche abandonnée \nfinit', 'https://i.imgur.com/SlRpNoc.png');
+  	     .setFooter('👌 Tâche acceptée 👍 Tâche terminée 👎 Tâche abandonnée \n' + content + ' finit', 'https://i.imgur.com/SlRpNoc.png');
 
-      message.edit(exampleEmbed1);
+      message.edit(exampleEmbed);
       reacttask(message);
   }
   else if (reaction_orig.emoji.name == '👎') {
       let content='@' + user.username;
       let channel=message.channel;
-      let exampleEmbed2 = new Discord.MessageEmbed();
-      exampleEmbed2
+      let desc=message.embeds[0].description;
+      exampleEmbed
          .setColor('#FF0202')
          .setTitle('Tâche laissée vacante')
          .setURL('http://heficience.com/')
          .setAuthor('Tâche abandonée par ' + user.username, 'https://i.imgur.com/SlRpNoc.png', 'http://heficience.com/')
-         .addField(content, ' Mission abandonnée.', true)
+         .setDescription(desc)
          .setThumbnail(user.avatarURL())
          .setImage('https://i.imgur.com/SlRpNoc.png')
          .setTimestamp()
-         .setFooter('👌 Tâche acceptée 👍 Tâche terminée 👎 Tâche abandonnée \nabandonnée', 'https://i.imgur.com/SlRpNoc.png');
+         .setFooter('👌 Tâche acceptée 👍 Tâche terminée 👎 Tâche abandonnée \n' + content + ' abandonnée', 'https://i.imgur.com/SlRpNoc.png');
 
-      message.edit(exampleEmbed2);
+      message.edit(exampleEmbed);
       reacttask(message);
   }
 }
