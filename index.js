@@ -204,10 +204,9 @@ function task(message) {
 	     .setColor('#0099ff')
 	     .setTitle('Tâche à effectuer')
 	     .setURL('http://heficience.com/')
-	     .setAuthor('Tâche donnée par ' + author, 'https://i.imgur.com/SlRpNoc.png', 'http://heficience.com/')
+	     .setAuthor('Tâche donnée par ' + author, profilepicture, 'http://heficience.com/')
 	     .setDescription(content)
 	     .setThumbnail(profilepicture)
-	     .setImage('https://i.imgur.com/SlRpNoc.png')
 	     .setTimestamp()
 	     .setFooter('👌 Tâche acceptée 👍 Tâche terminée 👎 Tâche abandonnée \nà traiter', 'https://i.imgur.com/SlRpNoc.png');
 
@@ -233,7 +232,6 @@ function attributetask(reaction_orig, message, user) {
   	     .setAuthor('Tâche acceptée par ' + user.username, 'https://i.imgur.com/SlRpNoc.png', 'http://heficience.com/')
   	     .setDescription(desc)
              .setThumbnail(user.avatarURL())
-  	     .setImage('https://i.imgur.com/SlRpNoc.png')
   	     .setTimestamp()
   	     .setFooter('👌 Tâche acceptée 👍 Tâche terminée 👎 Tâche abandonnée \n' + content + ' acceptée', 'https://i.imgur.com/SlRpNoc.png');
 
@@ -251,7 +249,6 @@ function attributetask(reaction_orig, message, user) {
   	     .setAuthor('Tâche terminée par ' + user.username, 'https://i.imgur.com/SlRpNoc.png', 'http://heficience.com/')
   	     .setDescription(desc)
              .setThumbnail(user.avatarURL())
-  	     .setImage('https://i.imgur.com/SlRpNoc.png')
   	     .setTimestamp()
   	     .setFooter('👌 Tâche acceptée 👍 Tâche terminée 👎 Tâche abandonnée \n' + content + ' finit', 'https://i.imgur.com/SlRpNoc.png');
 
@@ -269,7 +266,6 @@ function attributetask(reaction_orig, message, user) {
          .setAuthor('Tâche abandonée par ' + user.username, 'https://i.imgur.com/SlRpNoc.png', 'http://heficience.com/')
          .setDescription(desc)
          .setThumbnail(user.avatarURL())
-         .setImage('https://i.imgur.com/SlRpNoc.png')
          .setTimestamp()
          .setFooter('👌 Tâche acceptée 👍 Tâche terminée 👎 Tâche abandonnée \n' + content + ' abandonnée', 'https://i.imgur.com/SlRpNoc.png');
 
