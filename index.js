@@ -1,5 +1,7 @@
 import Discord from 'discord.js-12';
-const client = new Discord.Client();
+const client = new Discord.Client({
+  partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
+});
 let exampleEmbed = new Discord.MessageEmbed();
 import fs from 'fs';
 import fetch from 'node-fetch';
@@ -375,16 +377,16 @@ client.on('message', message => {
     };
 });
 
-client.on('messageReactionAdd', (reaction_orig, user) => {
+client.on('messageReactionAdd', async (reaction_orig, user) => {
   // fetch the message if it's not cached
   const message = !reaction_orig.message.author
-      ? reaction_orig.message.fetch()
+      ? await reaction_orig.message.fetch()
       : reaction_orig.message;
   if (reaction_orig.message.author.id === user.id) {
      // the reaction is coming from the same user who posted the message
      return;
   }
-  if (message.channel.name == '💼-taches') {
+  if (message.channel.name === '💼-taches') {
       attributetask(reaction_orig, reaction_orig.message, user);
   }
 });
