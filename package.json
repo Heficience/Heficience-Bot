@@ -20,7 +20,6 @@
     "dotenv": "^10.0.0",
     "events": "latest",
     "fs": "latest",
-    "node": "^17.0.1",
     "node-fetch": "^3.0.0",
     "path": "latest",
     "ws": "latest"
