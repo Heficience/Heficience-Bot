@@ -15,6 +15,7 @@ let list_jour_message = [];
 let list_heure_message = [];
 let chemin_fichier = "./newUser.json";
 let answer = "";
+let role;
 const prefix_wave_react_list = ["hello", "bonjour", "bonsoir", "coucou", "hey", "salut"];
 const num_react_list = ['0️⃣','1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🔟'];
 const prefix = "!";
@@ -275,6 +276,31 @@ function attributetask(reaction_orig, message, user) {
       reacttask(message);
   }
 }
+/* ------------------------------------Fonction Rôle ----------------------------------------------*/
+
+function addRole(reaction_orig, message, user) {
+  let react = reaction_orig.emoji.name;
+  if (react == 'langage_asm' || react == 'langage_c' || react == 'langage_cpp' ||
+   react == 'langage_csharp' || react == 'langage_html' || react == 'langage_css' ||
+   react == 'langage_java' || react == 'langage_js' || react == 'langage_lua' ||
+   react == 'langage_php' || react == 'langage_python' || react == 'qt') {
+     role = message.guild.roles.cache.find(r => r.name === react);
+     let userMember = message.guild.members.cache.get(user.id)
+     userMember.roles.add(role);
+   }
+}
+
+function removeRole(reaction_orig, message, user) {
+  let react = reaction_orig.emoji.name;
+  if (react == 'langage_asm' || react == 'langage_c' || react == 'langage_cpp' ||
+   react == 'langage_csharp' || react == 'langage_html' || react == 'langage_css' ||
+   react == 'langage_java' || react == 'langage_js' || react == 'langage_lua' ||
+   react == 'langage_php' || react == 'langage_python' || react == 'qt') {
+     role = message.guild.roles.cache.find(r => r.name === react);
+     let userMember = message.guild.members.cache.get(user.id)
+     userMember.roles.remove(role);
+   }
+}
 
 /* ----------------------------------- Fonction Discord ------------------------------------------ */
 
@@ -382,12 +408,25 @@ client.on('messageReactionAdd', async (reaction_orig, user) => {
   const message = !reaction_orig.message.author
       ? await reaction_orig.message.fetch()
       : reaction_orig.message;
+  if (message.channel.name === '⌨-langage-connu') {
+     addRole(reaction_orig, reaction_orig.message, user);
+  }
   if (reaction_orig.message.author.id === user.id) {
      // the reaction is coming from the same user who posted the message
      return;
   }
   if (message.channel.name === '💼-taches') {
       attributetask(reaction_orig, reaction_orig.message, user);
+  }
+});
+
+client.on('messageReactionRemove', async (reaction_orig, user) => {
+  // fetch the message if it's not cached
+  const message = !reaction_orig.message.author
+      ? await reaction_orig.message.fetch()
+      : reaction_orig.message;
+  if (message.channel.name === '⌨-langage-connu') {
+     removeRole(reaction_orig, reaction_orig.message, user);
   }
 });
 
