@@ -23,7 +23,7 @@ __III - GESTION DES TÂCHES ET COMPÉTENCES :__
 
    1 - La commande  
 
-   __**!tache**__  
+   __**!tache**__  suivi des instructions liées à la tâche
 
    dans le salon **#💼-taches**,  
 
