@@ -51,7 +51,7 @@ Une fois avoir réagit avec 👍 les émojis pour choisir l'état de la tâche d
 - Langage LUA ![langage_lua](langage/langage_lua.png)
 - Langage php ![langage_php](langage/langage_php.png)
 - Langage Python ![langage_python](langage/langage_python.png)
-- Bibliothèques Qt (pour C++ ou Python) ![langage_qt](langage/qt.png)
+- Bibliothèques Qt (pour C++ ou Python) ![qt](langage/qt.png)
 
 __IV - PRISE DE DÉCISIONS :__  
 ------------------------------
