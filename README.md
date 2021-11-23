@@ -1,6 +1,6 @@
 # Heficience Bot
 
-![logo Heficience](logofinal2large.png) 
+![Logo Heficience](logofinal2large.png) 
 
 ![Ceci est un bot](Laurels_bot.png)  
 
