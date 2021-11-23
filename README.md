@@ -1,6 +1,10 @@
-# Heficience Bot  
-## Un bot Discord  
+# Heficience Bot
+
+![logo Heficience](logofinal2large.png) 
+
 ![Ceci est un bot](Laurels_bot.png)  
+
+## Un bot Discord  
 
 Fonctionalités du bot :  
 
