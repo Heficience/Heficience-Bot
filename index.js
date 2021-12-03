@@ -302,6 +302,76 @@ function removeRole(reaction_orig, message, user) {
    }
 }
 
+/*--------------------------------------Fonction Help-------------------------------------------*/
+
+function help(message) {
+  const myEmbed = new Discord.MessageEmbed()
+    .setImage("https://github.com/Heficience/Heficience-Bot/raw/main/logofinal2large.png")
+  message.reply(myEmbed);
+  myEmbed
+    .setColor('#70CC95')
+    .setTitle('Heficience Bot Help')
+    .setURL('http://heficience.com/')
+    .setAuthor('Heficience', 'https://imgur.com/d5JaaER.png', 'http://heficience.com/')
+    .setDescription('Aide pour Heficience-Bot')
+    .setImage('https://github.com/Heficience/Heficience-Bot/raw/main/Laurels_bot.png')
+    .setTitle('Un bot Discord')
+  message.reply(myEmbed);
+  myEmbed
+    .setImage('')
+    .setTitle('I - FONCTIONNALITÉS COOL :')
+    .setDescription(
+      '  1 - Toute personne qui commence son message par hello, bonjour, bonsoir, coucou, hey et salut aura la réaction : 👋 à son message.\n' +
+      '  2 - La commande "**!jitsi**" envoit en réponse un message contenant un lien unique vers la plateforme jitsi.')
+  message.reply(myEmbed);
+  myEmbed
+    .setTitle('II - ADMINISTRATION DU SERVEUR :')
+    .setDescription(
+      '  1 - Enregistrement des nouveaux arrivants sur un fichier json (l\'utilisation d\'un fichier permet en cas de coupure du bot même temporaire de ne pas réinitialiser la liste des nouveaux utilisateurs).\n' +
+      '  2 - Prévenir les Administrateurs et les Modérateurs du Serveur Discord quand les nouveaux arrivants sont là depuis plus de 24h, afin de vérifier qu\'ils ont bien respecté les règles d\'accès au(x) différent(s) statut(s).\n' +
+      '  3 - Afin de contrôler les liens postés par tout les intervenants du serveur par l\'équipe d\'Administration, une copie des messages contenant un lien internet sera transmis en MP aux Administrateurs et aux Modérateurs.\n4 - Afin de faciliter la gestion et la communication du serveur, tout message portant la mention @Administrateurs enverra une copie de ce dernier envoyée en MP aux Administrateurs et aux Modérateurs.')
+  message.reply(myEmbed);
+  myEmbed
+    .setTitle('III - GESTION DES TÂCHES ET COMPÉTENCES :')
+    .setDescription(
+      '  1 - La commande\n\n' +
+      '  __**!tache**__  suivi des instructions liées à la tâche\n\n' +
+      '  dans le salon **#💼-taches**,\n\n' +
+      '  ouvrira une tâche dans ce même salon (attention seul les admins peuvent lancer la commande). Ensuite, les personnes intéressées par la tâche peuvent :\n' +
+      '   - Soit utiliser la réaction avec l\'émoji 👌 pour accepter la tâche.\n' +
+      '   - Soit utiliser la réaction avec l\'émoji 👍 afin de signaler avoir terminée la tâche.\n' +
+      '   - Soit utiliser la réaction avec l\'émoji 👎 afin de signaler avoir abandonnée la tâche.\n\n' +
+      '   -Une fois avoir réagit avec 👍 les émojis pour choisir l\'état de la tâche disparaissent, si vous l\'avez fait par erreur ou si simplement vous voulez relancer la tâche, il faudra allez chercher manuellement l\'émoji de réaction voulue.\n\n' +
+      '  2 - Dans le salon **#⌨-langage-connu**\n' +
+      '   le clic sur chaque émoji correspondant au langage que vous maîtrisez vous donnera le rôle langage untel ou untel :\n' +
+      '   - Langage assembleur\n' +
+      '   - Langage C\n' +
+      '   - langage C++\n' +
+      '   - Langage C#\n' +
+      '   - Langage CSS\n' +
+      '   - Langage HTML\n' +
+      '   - Langage Java\n' +
+      '   - Langage JavaScript\n' +
+      '   - Langage LUA\n' +
+      '   - Langage php\n' +
+      '   - Langage Python\n' +
+      '   - Bibliothèques Qt (pour C++ ou Python)')
+    .setImage("https://media.discordapp.net/attachments/911252140679385158/914860540893990992/langage.png")
+  message.reply(myEmbed);
+  myEmbed
+    .setTitle('IV - PRISE DE DÉCISIONS :')
+    .setDescription(
+      '  1 - Les commandes suivantes en début de message permettent les votes :\n\n' +
+      '   !yes/no : ajoute 3 réactions : OUI, NON et ABSTENTION.\n\n' +
+      '   !n1-n2 : ajoute des numéros de n1 à n2 en réaction pour QCM où n1 et n2 sont des nombres à deux chiffres et n1 ≥ 0, n2 ≤ 10 et n1 ≤ n2.\n\n' +
+      'Par exemple :\n' +
+      '  !00-09 : ajoute des numéros de 0 à 9 en réaction.\n' +
+      '  !01-10 : ajoute des numéros de 1 à 10 en réaction.\n' +
+      '  !04-08 : ajoute des numéros de 4 à 8 en réaction.\n' )
+    .setImage('')
+  message.reply(myEmbed);
+}
+
 /* ----------------------------------- Fonction Discord ------------------------------------------ */
 
 client.once('ready', member => {
@@ -368,7 +438,7 @@ client.on('message', message => {
     let mention = message.mentions.roles.first();
     if (mention) {
         if (mention.id == "904780827123134524") {
-            answer = message.author.username + ' a envoyé ce message ***'  + message.content + '*** sur le salon ' + message.channel.name;
+            answer = messag.startsWithe.author.username + ' a envoyé ce message ***'  + message.content + '*** sur le salon ' + message.channel.name;
             EnvoiMessageAdmin(answer);
         }
     }
@@ -401,6 +471,9 @@ client.on('message', message => {
     } else if (command.startsWith("tache") && message.channel.name == '💼-taches') {
         task(message);
     };
+    if (command.startsWith("help")) {
+      help(message);
+    }
 });
 
 client.on('messageReactionAdd', async (reaction_orig, user) => {
