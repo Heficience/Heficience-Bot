@@ -474,8 +474,18 @@ client.on('guildMemberAdd', member => {
 
 client.on('message', message => {
 
+    const reactionEmojiOUI = message.guild.emojis.cache.find(emoji => emoji.name === 'OUI4');
+    const reactionEmojiNON = message.guild.emojis.cache.find(emoji => emoji.name === 'NON4');
+    const reactionEmojiABS = message.guild.emojis.cache.find(emoji => emoji.name === 'ABS3');
+
     if (message.channel.name == '✔-présentation') {
       message.react('✅');
+    }
+
+    if (message.channel.name == '💡-idées') {
+      message.react(reactionEmojiOUI);
+      message.react(reactionEmojiNON);
+      message.react(reactionEmojiABS);
     }
 
     let command = message.content.slice(prefix.length, message.length).toLowerCase();
@@ -509,9 +519,6 @@ client.on('message', message => {
     if (!message.content.startsWith(prefix)) return; // don't accept message which does not start with the prefix
     /* ----------------------------------- Commandes ---------------------------------- */
     if (command.startsWith("yes/no")) {
-        const reactionEmojiOUI = message.guild.emojis.cache.find(emoji => emoji.name === 'OUI4');
-        const reactionEmojiNON = message.guild.emojis.cache.find(emoji => emoji.name === 'NON4');
-        const reactionEmojiABS = message.guild.emojis.cache.find(emoji => emoji.name === 'ABS3');
         message.react(reactionEmojiOUI);
         message.react(reactionEmojiNON);
         message.react(reactionEmojiABS);
