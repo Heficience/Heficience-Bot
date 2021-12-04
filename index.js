@@ -550,10 +550,10 @@ client.on('messageReactionAdd', async (reaction_orig, user) => {
   }
   let guild = client.guilds.cache.get('904780608922849290');
   let member = guild.members.cache.get(user.id);
-  if (message.channel.name === '✔-présentation' && user.id !== client.user.id && (member.roles.cache.has('904780827123134524') || member.roles.cache.has('905386175949340672'))) {
+  if (message.channel.name === '✔-présentation' && user.id !== client.user.id && (member.roles.cache.has('904780827123134524') || member.cache.has('905386175949340672'))) {
      const roles = member.roles.cache.array();
      let role = message.guild.roles.cache.find(r => r.id === '916776104851820605');
-     message.member.roles.add(role);
+     message.member.addRole(role);
   }
   if (reaction_orig.message.author.id === user.id) {
      // the reaction is coming from the same user who posted the message
