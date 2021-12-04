@@ -304,11 +304,11 @@ function removeRole(reaction_orig, message, user) {
 
 /*--------------------------------------Fonction Help-------------------------------------------*/
 
-function help(message) {
+async function help(message) {
   const myEmbed1 = new Discord.MessageEmbed()
     .setColor('#70CC95')
     .setImage("https://github.com/Heficience/Heficience-Bot/raw/main/logofinal2large.png")
-  message.author.send(myEmbed1);
+    .setFooter('1/6')
   const myEmbed2 = new Discord.MessageEmbed()
     .setColor('#70CC95')
     .setTitle('Heficience Bot Help')
@@ -317,14 +317,14 @@ function help(message) {
     .setDescription('Aide pour Heficience-Bot')
     .setImage('https://github.com/Heficience/Heficience-Bot/raw/main/Laurels_bot.png')
     .setTitle('Un bot Discord')
-  message.author.send(myEmbed2);
+    .setFooter('2/6')
   const myEmbed3 = new Discord.MessageEmbed()
     .setColor('#70CC95')
     .setTitle('I - FONCTIONNALITÉS COOL :')
     .setDescription(
       '  1 - Toute personne qui commence son message par hello, bonjour, bonsoir, coucou, hey et salut aura la réaction : 👋 à son message.\n' +
       '  2 - La commande "**!jitsi**" envoit en réponse un message contenant un lien unique vers la plateforme jitsi.')
-  message.author.send(myEmbed3);
+    .setFooter('3/6')
   const myEmbed4 = new Discord.MessageEmbed()
     .setColor('#70CC95')
     .setTitle('II - ADMINISTRATION DU SERVEUR :')
@@ -332,7 +332,7 @@ function help(message) {
       '  1 - Enregistrement des nouveaux arrivants sur un fichier json (l\'utilisation d\'un fichier permet en cas de coupure du bot même temporaire de ne pas réinitialiser la liste des nouveaux utilisateurs).\n' +
       '  2 - Prévenir les Administrateurs et les Modérateurs du Serveur Discord quand les nouveaux arrivants sont là depuis plus de 24h, afin de vérifier qu\'ils ont bien respecté les règles d\'accès au(x) différent(s) statut(s).\n' +
       '  3 - Afin de contrôler les liens postés par tout les intervenants du serveur par l\'équipe d\'Administration, une copie des messages contenant un lien internet sera transmis en MP aux Administrateurs et aux Modérateurs.\n4 - Afin de faciliter la gestion et la communication du serveur, tout message portant la mention @Administrateurs enverra une copie de ce dernier envoyée en MP aux Administrateurs et aux Modérateurs.')
-  message.author.send(myEmbed4);
+    .setFooter('4/6')
   const myEmbed5 = new Discord.MessageEmbed()
     .setColor('#70CC95')
     .setTitle('III - GESTION DES TÂCHES ET COMPÉTENCES :')
@@ -360,7 +360,7 @@ function help(message) {
       '   - Langage Python\n' +
       '   - Bibliothèques Qt (pour C++ ou Python)')
     .setImage("https://media.discordapp.net/attachments/911252140679385158/914860540893990992/langage.png")
-  message.author.send(myEmbed5);
+    .setFooter('5/6')
   const myEmbed6 = new Discord.MessageEmbed()
     .setColor('#70CC95')
     .setTitle('IV - PRISE DE DÉCISIONS :')
@@ -373,8 +373,58 @@ function help(message) {
       '  !01-10 : ajoute des numéros de 1 à 10 en réaction.\n' +
       '  !04-08 : ajoute des numéros de 4 à 8 en réaction.\n' )
     .setImage('')
-  message.author.send(myEmbed6);
+    .setFooter('6/6')
+
+    let page = 0;
+    let pages = [myEmbed1, myEmbed2, myEmbed3, myEmbed4, myEmbed5, myEmbed6];
+
+    const messageSent = await message.author.send(pages[page]);
+
+    await messageSent.react('⏪');
+    await messageSent.react('⏩');
+
+
+    const filter = (reaction, user) => ['⏪', '⏩'].includes(reaction.emoji.name);
+
+    const time = 60000 //amount of time to collect for in milliseconds
+
+    //const collector = messageSent.createReactionCollector(filter, { time: time });
+    const collector = messageSent.createReactionCollector(filter, { dispose: true });
+
+    collector.on('collect', (reaction, user) => {
+      switch (reaction.emoji.name) {
+        case '⏪':
+          //reaction.users.remove(user);
+          if (page > 0) page -= 1;
+          messageSent.edit(pages[page]);
+          break;
+        case '⏩':
+          //reaction.users.remove(user);
+          if (page < 5) page += 1;
+          messageSent.edit(pages[page]);
+          break;
+        default:
+          message.author.send("mauvais choix");
+      }
+    })
+    collector.on('remove', (reaction, user) => {
+      switch (reaction.emoji.name) {
+        case '⏪':
+          //reaction.users.remove(user);
+          if (page > 0) page -= 1;
+          messageSent.edit(pages[page]);
+          break;
+        case '⏩':
+          //reaction.users.remove(user);
+          if (page < 5) page += 1;
+          messageSent.edit(pages[page]);
+          break;
+        default:
+          message.author.send("mauvais choix");
+      }
+    })
 }
+
 
 /* ----------------------------------- Fonction Discord ------------------------------------------ */
 
