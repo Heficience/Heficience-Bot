@@ -548,7 +548,7 @@ client.on('messageReactionAdd', async (reaction_orig, user) => {
   if (message.channel.name === '⌨-langage-connu') {
      addRole(reaction_orig, reaction_orig.message, user);
   }
-  if (message.channel.name === '✔-présentation' && (user.roles.find(r => r.id === '904780827123134524') || user.roles.find(r => r.id === '905386175949340672'))) {
+  if (message.channel.name === '✔-présentation' && (member.roles.find(r => r.id === '904780827123134524') || member.roles.find(r => r.id === '905386175949340672'))) {
      let role = message.guild.roles.cache.find(r => r.id === '916776104851820605');
      message.member.addRole(role);
   }
