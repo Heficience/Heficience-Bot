@@ -488,6 +488,10 @@ client.on('message', message => {
         }
     }
 
+    if (message.channel.name == '✔-présentation') {
+        message.react('✅');
+    }
+
     const list = client.guilds.cache.get("904780608922849290");
 
     if ((message.content.includes('https://') || message.content.includes('http://') || message.content.includes('www.') || message.content.includes('.fr') || message.content.includes('.be') || message.content.includes('.com') || message.content.includes('.uk') || message.content.includes('.de') || message.content.includes('.org'))) {
@@ -542,6 +546,10 @@ client.on('messageReactionAdd', async (reaction_orig, user) => {
       : reaction_orig.message;
   if (message.channel.name === '⌨-langage-connu') {
      addRole(reaction_orig, reaction_orig.message, user);
+  }
+  if (message.channel.name === '✔-présentation' && (user.roles.has'904780827123134524' || user.roles.has'905386175949340672')) {
+     let role = message.guild.roles.cache.find(r => r.id === '916776104851820605');
+     addRole('Membres', reaction_orig.message, user);
   }
   if (reaction_orig.message.author.id === user.id) {
      // the reaction is coming from the same user who posted the message
