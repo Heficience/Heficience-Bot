@@ -473,6 +473,11 @@ client.on('guildMemberAdd', member => {
 });
 
 client.on('message', message => {
+
+    if (message.channel.name == '✔-présentation') {
+      message.react('✅');
+    }
+
     let command = message.content.slice(prefix.length, message.length).toLowerCase();
 
     /* -----------------------------------   Tasks    ---------------------------------- */
@@ -486,10 +491,6 @@ client.on('message', message => {
             message.react('👋');
             break;
         }
-    }
-
-    if (message.channel.name == '✔-présentation') {
-        message.react('✅');
     }
 
     const list = client.guilds.cache.get("904780608922849290");
@@ -547,7 +548,7 @@ client.on('messageReactionAdd', async (reaction_orig, user) => {
   if (message.channel.name === '⌨-langage-connu') {
      addRole(reaction_orig, reaction_orig.message, user);
   }
-  if (message.channel.name === '✔-présentation' && (user.roles.has'904780827123134524' || user.roles.has'905386175949340672')) {
+  if (message.channel.name === '✔-présentation' && (user.roles.has('904780827123134524') || user.roles.has('905386175949340672'))) {
      let role = message.guild.roles.cache.find(r => r.id === '916776104851820605');
      message.member.addRole(role);
   }
