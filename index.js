@@ -428,6 +428,11 @@ async function help(message) {
 
 /* ----------------------------------- Fonction Discord ------------------------------------------ */
 
+client.on("ready", () => {
+  client.user.setStatus("online");
+  client.user.setActivity('!help', { type: "WATCHING"})
+})
+
 client.once('ready', member => {
     console.log('Ready!');
     setInterval(function(){
