@@ -7,7 +7,7 @@ import fs from 'fs';
 import fetch from 'node-fetch';
 import path from 'path';
 import dotenv from 'dotenv';
-import crypto from 'crypto';
+import cryptoRandomString from 'crypto-random-string';
 dotenv.config();
 let list_username = [];
 let list_id = [];
@@ -540,8 +540,7 @@ client.on('message', message => {
         message.channel.send(answer);
         requestHOSDL(message);
     } else if (command.startsWith("jitsi")) {
-        let crypto = require("crypto");
-        let r = crypto.randomBytes(20).toString('hex');
+        let r = cryptoRandomString({length: 20, type: 'base64'});
         message.reply("https://meet.jit.si/" + r);
     } else if (command.startsWith("tache") && message.channel.name == '💼-taches') {
         task(message);
