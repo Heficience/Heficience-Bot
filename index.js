@@ -459,6 +459,7 @@ client.once('ready', member => {
 });
 
 client.on('guildMemberAdd', member => {
+    member.guild.channels.cache.get('916775486166814750').send(`Salut <@` + member.user.id + `>, bienvenu ici, présente toi ici s'il-te-plaît.`);
     LireFichierJson(chemin_fichier);
     let time = new Date();
     let jour_arriver = new Date();
