@@ -326,14 +326,16 @@ async function setWeatherInformation(message) {
       DATA.city_weather = r.weather[0].description;
       DATA.city_weather_icon = r.weather[0].icon;
       DATA.sun_rise = new Date(r.sys.sunrise * 1000).toLocaleString('fr-FR', {
+        hour12: false,
         hour: '2-digit',
         minute: '2-digit',
-        timeZone: 'Europe/Paris',
+        timeZone: 'Europe/Paris'
       });
       DATA.sun_set = new Date(r.sys.sunset * 1000).toLocaleString('fr-FR', {
+        hour12: false,
         hour: '2-digit',
         minute: '2-digit',
-        timeZone: 'Europe/Paris',
+        timeZone: 'Europe/Paris'
       });
     });
     const myEmbed0 = new Discord.MessageEmbed()
@@ -341,6 +343,7 @@ async function setWeatherInformation(message) {
       .setColor('#70CC95')
       .setDescription(DATA.city_temperature + "°C, " + DATA.city_weather)
       .setImage("http://openweathermap.org/img/wn/" + DATA.city_weather_icon + "@2x.png")
+      .setFooter("Aujourd'hui, le soleil s'est levé à " + DATA.sun_rise + " et se couchera à " + DATA.sun_set)
     const messageMeteo = await message.reply(myEmbed0);
 
 }
