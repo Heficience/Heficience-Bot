@@ -19,6 +19,17 @@ let role;
 const prefix_wave_react_list = ["hello", "bonjour", "bonsoir", "coucou", "hey", "salut"];
 const num_react_list = ['0️⃣','1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🔟'];
 const prefix = "!";
+let DATA = {
+  refresh_date: new Date().toLocaleDateString('fr-FR', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    timeZoneName: 'short',
+    timeZone: 'Europe/Paris',
+  }),
+};
 
 /* ----------------------- Fonction Desmos---------------------------- */
 
@@ -302,6 +313,38 @@ function removeRole(reaction_orig, message, user) {
    }
 }
 
+/*--------------------------------------Fonction Météo-------------------------------------------*/
+
+async function setWeatherInformation(message) {
+  let ville = message.content.startsWith('!meteo')
+    ? message.content.substr(6)
+    : message.content;
+  await fetch(`https://api.openweathermap.org/data/2.5/weather?q=` + ville + `&appid=` + process.env.OPEN_WEATHER_MAP_KEY + `&units=metric&lang=fr`)
+    .then(r => r.json())
+    .then(r => {
+      DATA.city_temperature = Math.round(r.main.temp);
+      DATA.city_weather = r.weather[0].description;
+      DATA.city_weather_icon = r.weather[0].icon;
+      DATA.sun_rise = new Date(r.sys.sunrise * 1000).toLocaleString('fr-FR', {
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'Europe/Paris',
+      });
+      DATA.sun_set = new Date(r.sys.sunset * 1000).toLocaleString('fr-FR', {
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'Europe/Paris',
+      });
+    });
+    const myEmbed0 = new Discord.MessageEmbed()
+      .setTitle('Un point sur la météo en direct de ' + ville)
+      .setColor('#70CC95')
+      .setDescription(DATA.city_temperature + "°C, " + DATA.city_weather)
+      .setImage("http://openweathermap.org/img/wn/" + DATA.city_weather_icon + "@2x.png")
+    const messageMeteo = await message.reply(myEmbed0);
+
+}
+
 /*--------------------------------------Fonction Help-------------------------------------------*/
 
 async function help(message) {
@@ -474,9 +517,6 @@ client.on('guildMemberAdd', member => {
 });
 
 client.on('message', message => {
-
-
-
     if (message.channel.name == '✔-présentation') {
       message.react('✅');
     }
@@ -520,6 +560,9 @@ client.on('message', message => {
     }
     if (!message.content.startsWith(prefix)) return; // don't accept message which does not start with the prefix
     /* ----------------------------------- Commandes ---------------------------------- */
+    if (command.startsWith("meteo")) {
+      setWeatherInformation(message);
+    }
     if (command.startsWith("yes/no")) {
         const reactionEmojiOUI = message.guild.emojis.cache.find(emoji => emoji.name === 'OUI4');
         const reactionEmojiNON = message.guild.emojis.cache.find(emoji => emoji.name === 'NON4');
